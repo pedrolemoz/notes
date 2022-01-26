@@ -1,7 +1,7 @@
 import 'sql_data_type.dart';
 
 class SQLText extends SQLDataType {
-  SQLText({
+  const SQLText({
     required String description,
     bool isPrimaryKey = false,
     bool isForeignKey = false,

@@ -1,7 +1,7 @@
 import 'sql_data_type.dart';
 
 class SQLInteger extends SQLDataType {
-  SQLInteger({
+  const SQLInteger({
     required String description,
     bool isAutoIncremented = false,
     bool isPrimaryKey = false,

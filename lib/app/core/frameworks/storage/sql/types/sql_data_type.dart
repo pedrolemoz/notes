@@ -30,7 +30,7 @@ class SQLDataType extends Equatable implements SQLQuery {
     }
 
     if (isAutoIncremented) {
-      query.write(' AUTO INCREMENT');
+      query.write(' AUTOINCREMENT');
     }
 
     if (isNotNull) {

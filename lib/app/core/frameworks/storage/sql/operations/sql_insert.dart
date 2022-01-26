@@ -10,8 +10,15 @@ class SQLInsert extends Equatable implements SQLQuery {
 
   @override
   String asQuery() {
-    final columns = data.keys.toList().reduce((a, b) => a += ', $b');
-    final values = data.values.toList().reduce((a, b) => a += ', $b');
+    final columns = data.keys
+        .toList()
+        .map((e) => e.toString())
+        .reduce((a, b) => a += ', $b');
+
+    final values = data.values
+        .toList()
+        .map((e) => e.toString())
+        .reduce((a, b) => a += ', $b');
 
     return 'INSERT INTO $tableName ($columns) VALUES ($values);';
   }

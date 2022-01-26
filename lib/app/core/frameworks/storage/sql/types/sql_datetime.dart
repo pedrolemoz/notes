@@ -1,7 +1,7 @@
 import 'sql_data_type.dart';
 
 class SQLDateTime extends SQLDataType {
-  SQLDateTime({
+  const SQLDateTime({
     required String description,
     bool isPrimaryKey = false,
     bool isForeignKey = false,

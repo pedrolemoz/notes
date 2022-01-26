@@ -1,7 +1,7 @@
 import 'sql_data_type.dart';
 
 class SQLReal extends SQLDataType {
-  SQLReal({
+  const SQLReal({
     required String description,
     bool isPrimaryKey = false,
     bool isForeignKey = false,

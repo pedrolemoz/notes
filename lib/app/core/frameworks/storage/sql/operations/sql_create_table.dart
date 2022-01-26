@@ -7,7 +7,7 @@ class SQLCreateTable extends Equatable implements SQLQuery {
   final String tableName;
   final List<SQLDataType> tableContents;
 
-  SQLCreateTable({required this.tableName, required this.tableContents});
+  const SQLCreateTable({required this.tableName, required this.tableContents});
 
   @override
   String asQuery() =>

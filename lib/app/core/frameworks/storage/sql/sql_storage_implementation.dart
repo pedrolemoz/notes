@@ -7,14 +7,19 @@ import 'operations/sql_insert.dart';
 import 'sql_storage.dart';
 
 class SQFliteImplementation implements SQLStorage {
+  final SQLConfiguration sqlConfiguration;
   late final Database _dataBase;
+
+  SQFliteImplementation(this.sqlConfiguration);
 
   Future<void> initializeDataBase() async {
     _dataBase = await openDatabase(
-      join(await getDatabasesPath(), 'notes.db'),
-      version: 1,
+      join(await getDatabasesPath(), sqlConfiguration.dataBaseName()),
+      version: sqlConfiguration.dataBaseVersion(),
       onCreate: (dataBase, version) async {
-        for (var statement in SQLConfiguration.createTableStatements) {
+        final statements = sqlConfiguration.createTableStatements();
+
+        for (var statement in statements) {
           await dataBase.execute(statement.asQuery());
         }
       },
