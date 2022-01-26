@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/domain/entities/note.dart';
 import '../../../../core/domain/errors/failure.dart';
 import '../../../../core/domain/repositories/note_repository.dart';
-import '../errors/note_creation_failures.dart';
+import '../validators/new_note_validator.dart';
 
 abstract class CreateNewNote {
   Future<Either<Failure, Note>> call(Note note);
@@ -11,29 +11,19 @@ abstract class CreateNewNote {
 
 class CreateNewNoteImplementation implements CreateNewNote {
   final NoteRepository repository;
+  final NewNoteValidator validator;
 
-  const CreateNewNoteImplementation(this.repository);
+  const CreateNewNoteImplementation(this.repository, this.validator);
 
   @override
   Future<Either<Failure, Note>> call(Note note) async {
     try {
-      if (note.code.isNegative) {
-        return Left(InvalidNoteCodeFailure());
-      }
+      final result = validator.hasValidNewNote(note);
 
-      if (note.content == '' || note.content.isEmpty) {
-        return Left(InvalidNoteContentFailure());
-      }
-
-      if (note.creationDate.isAfter(DateTime.now())) {
-        return Left(InvalidNoteCreationDateFailure());
-      }
-
-      if (!note.modificationDate.isAtSameMomentAs(note.creationDate)) {
-        return Left(InvalidNoteModificationDateFailure());
-      }
-
-      return await repository.createNewNote(note);
+      return result.fold(
+        (failure) => Left(failure),
+        (success) async => await repository.createNewNote(note),
+      );
     } catch (exception) {
       return Left(Failure(message: exception.toString()));
     }
