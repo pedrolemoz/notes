@@ -11,8 +11,8 @@ dependencies:
     sdk: flutter
 
   equatable: ^2.0.3
-  fpdart: ^0.0.12
   sqflite: ^2.0.2
+  dartz: ^0.10.1
 
 flutter:
   uses-material-design: true
