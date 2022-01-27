@@ -18,19 +18,19 @@ abstract class NewNoteValidator {
 class NewNoteValidatorImplementation implements NewNoteValidator {
   @override
   Either<Failure, bool> hasValidNewNote(Note note) {
-    if (hasValidCode(note.code)) {
+    if (!hasValidCode(note.code)) {
       return Left(InvalidNoteCodeFailure());
     }
 
-    if (hasValidContent(note.content)) {
+    if (!hasValidContent(note.content)) {
       return Left(InvalidNoteContentFailure());
     }
 
-    if (hasValidCreationDate(note.creationDate)) {
+    if (!hasValidCreationDate(note.creationDate)) {
       return Left(InvalidNoteCreationDateFailure());
     }
 
-    if (hasValidModificationDate(note.modificationDate, note.creationDate)) {
+    if (!hasValidModificationDate(note.modificationDate, note.creationDate)) {
       return Left(InvalidNoteModificationDateFailure());
     }
 
@@ -38,7 +38,7 @@ class NewNoteValidatorImplementation implements NewNoteValidator {
   }
 
   @override
-  bool hasValidCode(int code) => !code.isNegative;
+  bool hasValidCode(int code) => code == -1;
 
   @override
   bool hasValidContent(String content) => content != '' && content.isNotEmpty;
