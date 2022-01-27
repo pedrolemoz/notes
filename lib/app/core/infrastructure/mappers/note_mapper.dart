@@ -10,11 +10,19 @@ class NoteMapper {
     return SQLInsert(
       tableName: 'NOTES',
       data: {
-        'ID': note.code,
         'CONTENT': note.content,
         'CREATION_DATE': note.creationDate.toIso8601String(),
         'MODIFICATION_DATE': note.modificationDate.toIso8601String(),
       },
+    );
+  }
+
+  static fromMap(Map<String, dynamic> map) {
+    return Note(
+      code: map['ID'],
+      content: map['CONTENT'],
+      creationDate: DateTime.parse(map['CREATION_DATE']),
+      modificationDate: DateTime.parse(map['MODIFICATION_DATE']),
     );
   }
 
