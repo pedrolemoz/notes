@@ -10,6 +10,7 @@ class NoteMapper {
     return SQLInsert(
       tableName: 'NOTES',
       data: {
+        'TITLE': note.title,
         'CONTENT': note.content,
         'CREATION_DATE': note.creationDate.toIso8601String(),
         'MODIFICATION_DATE': note.modificationDate.toIso8601String(),
@@ -20,6 +21,7 @@ class NoteMapper {
   static fromMap(Map<String, dynamic> map) {
     return Note(
       code: map['ID'],
+      title: map['TITLE'],
       content: map['CONTENT'],
       creationDate: DateTime.parse(map['CREATION_DATE']),
       modificationDate: DateTime.parse(map['MODIFICATION_DATE']),
@@ -34,6 +36,7 @@ class NoteMapper {
             isPrimaryKey: true,
             isAutoIncremented: true,
           ),
+          SQLText(description: 'TITLE'),
           SQLText(description: 'CONTENT'),
           SQLDateTime(description: 'CREATION_DATE'),
           SQLDateTime(description: 'MODIFICATION_DATE'),
