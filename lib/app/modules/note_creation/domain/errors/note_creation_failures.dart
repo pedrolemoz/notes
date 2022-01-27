@@ -1,13 +1,9 @@
-import '../../../../core/domain/errors/failure.dart';
+import '../../../../core/domain/errors/note_failures.dart';
 
-class NoteCreationFailure extends Failure {
-  const NoteCreationFailure({String? message}) : super(message: message);
-}
+class InvalidNoteCodeFailure extends NoteFailure {}
 
-class InvalidNoteCodeFailure extends NoteCreationFailure {}
+class InvalidNoteContentFailure extends NoteFailure {}
 
-class InvalidNoteContentFailure extends NoteCreationFailure {}
+class InvalidNoteCreationDateFailure extends NoteFailure {}
 
-class InvalidNoteCreationDateFailure extends NoteCreationFailure {}
-
-class InvalidNoteModificationDateFailure extends NoteCreationFailure {}
+class InvalidNoteModificationDateFailure extends NoteFailure {}

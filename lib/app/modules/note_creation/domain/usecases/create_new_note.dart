@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/domain/entities/note.dart';
 import '../../../../core/domain/errors/failure.dart';
+import '../../../../core/domain/errors/note_failures.dart';
 import '../../../../core/domain/repositories/note_repository.dart';
 import '../validators/new_note_validator.dart';
 
@@ -25,7 +26,7 @@ class CreateNewNoteImplementation implements CreateNewNote {
         (success) async => await repository.createNewNote(note),
       );
     } catch (exception) {
-      return Left(Failure(message: exception.toString()));
+      return Left(NoteFailure(message: exception.toString()));
     }
   }
 }
