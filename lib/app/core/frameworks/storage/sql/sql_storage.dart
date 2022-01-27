@@ -1,5 +1,7 @@
 import 'operations/sql_insert.dart';
+import 'operations/sql_select.dart';
 
 abstract class SQLStorage {
-  Future<void> insert(SQLInsert parameters);
+  Future<int> insert(SQLInsert parameters);
+  Future<List<Map<String, dynamic>>> select(SQLSelect parameters);
 }
