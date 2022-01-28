@@ -11,6 +11,6 @@ class SQLConfigurationImplementation implements SQLConfiguration {
 
   @override
   List<SQLCreateTable> createTableStatements() {
-    return [NoteMapper.createTable];
+    return [NoteMapper.tableCreationStatement];
   }
 }

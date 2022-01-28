@@ -16,23 +16,7 @@ class Note extends Equatable {
   });
 
   Duration get timeElapsedSinceCreation =>
-      creationDate.difference(modificationDate);
-
-  Note copyWith({
-    int? code,
-    String? title,
-    String? content,
-    DateTime? creationDate,
-    DateTime? modificationDate,
-  }) {
-    return Note(
-      code: code ?? this.code,
-      title: title ?? this.title,
-      content: content ?? this.content,
-      creationDate: creationDate ?? this.creationDate,
-      modificationDate: modificationDate ?? this.modificationDate,
-    );
-  }
+      creationDate.difference(DateTime.now());
 
   @override
   List<Object?> get props => [
