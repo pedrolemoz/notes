@@ -27,10 +27,7 @@ abstract class _NoteListingControllerBase with Store {
     final result = await _getNotes();
 
     result.fold(
-      (failure) {
-        print(failure);
-        state = ControllerState.error;
-      },
+      (failure) => state = ControllerState.error,
       (success) {
         notes = success.toList().asObservable();
         state = ControllerState.success;
