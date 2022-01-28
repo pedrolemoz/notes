@@ -8,15 +8,20 @@ import 'operations/sql_select.dart';
 import 'sql_storage.dart';
 
 class SQFliteImplementation implements SQLStorage {
+  bool hasInitializedDataBase = false;
   final SQLConfiguration sqlConfiguration;
-  Database? _dataBase;
+  late Database _dataBase;
 
   SQFliteImplementation(this.sqlConfiguration);
 
+  @override
   Future<void> initializeDataBase() async {
+    final path = await getDatabasesPath();
+
     _dataBase = await openDatabase(
-      join(await getDatabasesPath(), sqlConfiguration.dataBaseName()),
+      join(path, sqlConfiguration.dataBaseName()),
       version: sqlConfiguration.dataBaseVersion(),
+      onOpen: (dataBase) => hasInitializedDataBase = true,
       onCreate: (dataBase, version) async {
         final statements = sqlConfiguration.createTableStatements();
 
@@ -29,6 +34,10 @@ class SQFliteImplementation implements SQLStorage {
 
   @override
   Future<int> insert(SQLInsert parameters) async {
+    if (!hasInitializedDataBase) {
+      await initializeDataBase();
+    }
+
     if (parameters.tableName == '' || parameters.tableName.isEmpty) {
       throw InvalidSQLTableNameException();
     }
@@ -38,11 +47,7 @@ class SQFliteImplementation implements SQLStorage {
     }
 
     try {
-      if (_dataBase == null || _dataBase!.isOpen == false) {
-        await initializeDataBase();
-      }
-
-      return await _dataBase!.insert(parameters.tableName, parameters.data);
+      return await _dataBase.insert(parameters.tableName, parameters.data);
     } catch (exception) {
       throw SQLException(message: '$exception');
     }
@@ -50,25 +55,22 @@ class SQFliteImplementation implements SQLStorage {
 
   @override
   Future<List<Map<String, dynamic>>> select(SQLSelect parameters) async {
+    if (!hasInitializedDataBase) {
+      await initializeDataBase();
+    }
+
     if (parameters.tableName == '' || parameters.tableName.isEmpty) {
       throw InvalidSQLTableNameException();
     }
 
     if (parameters.columnMode == SQLSelectColumnMode.filteredColumns &&
             parameters.columns == null ||
-        parameters.columns!.isEmpty) {
+        parameters.columns != null && parameters.columns!.isEmpty) {
       throw InvalidSQLColumnsException();
     }
 
     try {
-      if (_dataBase == null || _dataBase!.isOpen == false) {
-        await initializeDataBase();
-      }
-
-      return await _dataBase!.query(
-        parameters.tableName,
-        columns: parameters.columns,
-      );
+      return await _dataBase.rawQuery(parameters.asQuery());
     } catch (exception) {
       throw SQLException(message: '$exception');
     }
