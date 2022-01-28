@@ -26,7 +26,7 @@ class CreateNewNoteImplementation implements CreateNewNote {
         (success) async => await repository.createNewNote(note),
       );
     } catch (exception) {
-      return Left(NoteFailure(message: exception.toString()));
+      return Left(NoteFailure(message: '$exception'));
     }
   }
 }
