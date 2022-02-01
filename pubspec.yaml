@@ -21,6 +21,9 @@ dependencies:
     sdk: flutter
     version: ^0.0.0
   unicons: ^2.0.2
+  bloc: ^8.0.2
+  flutter_bloc: ^8.0.1
+  shimmer: ^2.0.0
 
 flutter:
   uses-material-design: true
