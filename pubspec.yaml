@@ -15,8 +15,6 @@ dependencies:
   dartz: ^0.10.1
   flutter_modular: ^4.4.0
   animations: ^2.0.2
-  mobx: ^2.0.6+1
-  flutter_mobx: ^2.0.3+2
   flutter_localizations: 
     sdk: flutter
     version: ^0.0.0
