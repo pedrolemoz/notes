@@ -1,9 +1,12 @@
 import 'package:animations/animations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import 'domain/usecases/create_new_note.dart';
 import 'domain/usecases/get_notes.dart';
+import 'domain/validators/new_note_validator.dart';
 import 'external/datasources/note_datasource_implementation.dart';
 import 'infrastructure/repositories/note_repository_implementation.dart';
+import 'presentation/controllers/blocs/note_creation_bloc.dart';
 import 'presentation/controllers/blocs/note_listing_bloc.dart';
 import 'presentation/pages/note_listing_page.dart';
 
@@ -13,6 +16,9 @@ class NotesModule extends Module {
         Bind((i) => NoteDataSourceImplementation(i())),
         Bind((i) => NoteRepositoryImplementation(i())),
         Bind((i) => GetNotesImplementation(i())),
+        Bind((i) => NewNoteValidatorImplementation()),
+        Bind((i) => CreateNewNoteImplementation(i(), i())),
+        Bind((i) => NoteCreationBloc(i())),
         Bind((i) => NoteListingBloc(i())),
       ];
 
